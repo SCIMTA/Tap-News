@@ -15,7 +15,8 @@ import news_topic_modeling_service_client
 
 from cloudAMQP_client import CloudAMQPClient
 
-DEDUPE_NEWS_TASK_QUEUE_URL = "amqp://xzbggvzn:jFOMw3MZ6hzq0htegQTkG2S7fQsrNby1@chimpanzee.rmq.cloudamqp.com/xzbggvzn"
+# DEDUPE_NEWS_TASK_QUEUE_URL = "amqp://xzbggvzn:jFOMw3MZ6hzq0htegQTkG2S7fQsrNby1@chimpanzee.rmq.cloudamqp.com/xzbggvzn"
+DEDUPE_NEWS_TASK_QUEUE_URL = "amqps://fhafmgfc:jx85f69NB8LYHJmUde0IWiTe1KoVdvUy@gerbil.rmq.cloudamqp.com/fhafmgfc"      #redis thanh
 DEDUPE_NEWS_TASK_QUEUE_NAME = "tap-news-dedupe-news-task-queue"
 
 
@@ -60,7 +61,7 @@ def handle_message(msg):
         for row in range(1, rows):
             if pairwise_sim[row, 0] > SAME_NEWS_SIMILARITY_THRESHOLD:
                 # Duplicated news, ignore.
-                print 'Duplicated news, ignore.'
+                print ('Duplicated news, ignore.')
                 return
 
     task['publishedAt'] = parser.parse(task['publishedAt'])

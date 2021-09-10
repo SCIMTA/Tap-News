@@ -1,6 +1,8 @@
 from newsapi import NewsApiClient
 
-NEWS_API_KEY = 'd161fdcfcaed4789989a8e3ead3a5077'
+# NEWS_API_KEY = 'd161fdcfcaed4789989a8e3ead3a5077'
+NEWS_API_KEY = 'd0a5be8a25c444c1869232272935370a'     #api cua thanh
+
 
 CNN = 'cnn'
 DEFAULT_SOURCES = CNN

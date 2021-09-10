@@ -12,9 +12,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'scrapers'))
 from cloudAMQP_client import CloudAMQPClient
 import cnn_news_scraper
 
-DEDUPE_NEWS_TASK_QUEUE_URL = "amqp://xzbggvzn:jFOMw3MZ6hzq0htegQTkG2S7fQsrNby1@chimpanzee.rmq.cloudamqp.com/xzbggvzn"
+# DEDUPE_NEWS_TASK_QUEUE_URL = "amqp://xzbggvzn:jFOMw3MZ6hzq0htegQTkG2S7fQsrNby1@chimpanzee.rmq.cloudamqp.com/xzbggvzn"
+DEDUPE_NEWS_TASK_QUEUE_URL = "amqps://fhafmgfc:jx85f69NB8LYHJmUde0IWiTe1KoVdvUy@gerbil.rmq.cloudamqp.com/fhafmgfc"      #redis thanh
 DEDUPE_NEWS_TASK_QUEUE_NAME = "tap-news-dedupe-news-task-queue"
-SCRAPE_NEWS_TASK_QUEUE_URL = "amqp://hzileycx:iJgtzvRMYnzkdFGSdUYSytpAsW6FYnT_@chimpanzee.rmq.cloudamqp.com/hzileycx"
+# SCRAPE_NEWS_TASK_QUEUE_URL = "amqp://hzileycx:iJgtzvRMYnzkdFGSdUYSytpAsW6FYnT_@chimpanzee.rmq.cloudamqp.com/hzileycx"
+SCRAPE_NEWS_TASK_QUEUE_URL = "amqps://crdxxgsm:DKKFtoJFD5nBbyFFqYKCqtoDWearFCuo@gerbil.rmq.cloudamqp.com/crdxxgsm"      #redis thanh
 SCRAPE_NEWS_TASK_QUEUE_NAME = "tap-news-scrape-news-task-queue"
 
 SLEEP_TIME_IN_SECONDS = 5
@@ -24,7 +26,7 @@ scrape_news_queue_client = CloudAMQPClient(SCRAPE_NEWS_TASK_QUEUE_URL, SCRAPE_NE
 
 def handle_message(msg):
     if not isinstance(msg, dict):
-        print 'message is broken'
+        print ('message is broken')
         return
 
     task = msg
@@ -46,6 +48,6 @@ while True:
             try:
                 handle_message(msg)
             except Exception as e:
-                print e
+                print (e)
                 pass
         scrape_news_queue_client.sleep(SLEEP_TIME_IN_SECONDS)

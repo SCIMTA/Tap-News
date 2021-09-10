@@ -1,4 +1,4 @@
 {
-    "mongoDbUri": "mongodb://ztqsteve:Ztq50344630@ds141932.mlab.com:41932/tap-news-users",
-    "jwtSecret": "a secret phrase!!"
+    "mongoDbUri": "mongodb+srv://thanh:thanhtn123@cluster0.un40r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "jwtSecret": "7U>~g7#8qG^Z_ah4"
   }

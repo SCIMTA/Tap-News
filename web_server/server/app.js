@@ -43,5 +43,7 @@ app.use(function(req, res) {
   res.render('404 Not Found');
 });
 
+app.listen(8001, () => console.log("Server up! Listening on 8001."));
+
 
 module.exports = app;

@@ -44,7 +44,7 @@ def extract_news(news_url):
         news = tree.xpath(GET_CNN_NEWS_XPATH)
         news = ''.join(news)
     except Exception as e:
-        print e
+        print (e)
         return {}
 
     return news
