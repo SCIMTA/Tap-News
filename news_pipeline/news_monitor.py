@@ -12,7 +12,7 @@ import news_api_client
 from cloudAMQP_client import CloudAMQPClient
 
 # REDIS_HOST = 'localhost'
-REDIS_HOST = '172.29.81.130'        #wsl redis
+REDIS_HOST = '192.168.145.229'        #wsl redis
 REDIS_PORT = 6379
 
 NEWS_TIME_OUT_IN_SECONDS = 3600 * 24

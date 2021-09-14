@@ -28,7 +28,8 @@ REDIS_PORT = 6379
 redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT, db=0)
 
 
-LOG_CLICKS_TASK_QUEUE_URL = "amqp://pbsoegxa:ybQrjx9SwAVY5Icb083qQu0dJQ8IkIK7@chimpanzee.rmq.cloudamqp.com/pbsoegxa"
+# LOG_CLICKS_TASK_QUEUE_URL = "amqp://pbsoegxa:ybQrjx9SwAVY5Icb083qQu0dJQ8IkIK7@chimpanzee.rmq.cloudamqp.com/pbsoegxa"
+LOG_CLICKS_TASK_QUEUE_URL = "amqps://lwxbeutb:VmL9JBI1NZiv1bdDAwJ0RWrQY9RmaZdU@gerbil.rmq.cloudamqp.com/lwxbeutb"   #cloudamqp thanh
 LOG_CLICKS_TASK_QUEUE_NAME = "tap-news-log-clicks-task-queue"
 cloudAMQP_client = CloudAMQPClient(LOG_CLICKS_TASK_QUEUE_URL, LOG_CLICKS_TASK_QUEUE_NAME)
 
