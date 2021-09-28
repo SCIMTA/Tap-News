@@ -40,7 +40,7 @@ print(NEWS_SOURCES)
 
 redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT)
 cloudAMQP_client = CloudAMQPClient(SCRAPE_NEWS_TASK_QUEUE_URL, SCRAPE_NEWS_TASK_QUEUE_NAME)
-SLEEP_TIME_IN_SECONDS = 1
+SLEEP_TIME_IN_SECONDS = 30
 
 while True:
     news_list = news_api_client.getNewsFromSource(NEWS_SOURCES)
