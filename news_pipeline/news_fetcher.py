@@ -13,13 +13,15 @@ from cloudAMQP_client import CloudAMQPClient
 import cnn_news_scraper
 
 # DEDUPE_NEWS_TASK_QUEUE_URL = "amqp://xzbggvzn:jFOMw3MZ6hzq0htegQTkG2S7fQsrNby1@chimpanzee.rmq.cloudamqp.com/xzbggvzn"
-DEDUPE_NEWS_TASK_QUEUE_URL = "amqps://fhafmgfc:jx85f69NB8LYHJmUde0IWiTe1KoVdvUy@gerbil.rmq.cloudamqp.com/fhafmgfc"      #redis thanh
+# DEDUPE_NEWS_TASK_QUEUE_URL = "amqps://fhafmgfc:jx85f69NB8LYHJmUde0IWiTe1KoVdvUy@gerbil.rmq.cloudamqp.com/fhafmgfc"      #redis thanh
+DEDUPE_NEWS_TASK_QUEUE_URL = "amqps://gmpzlsjw:MPgc1tkaGgUcqyIfTdTmofNXUuNJMQzy@cattle.rmq2.cloudamqp.com/gmpzlsjw"      #amqp hoang
 DEDUPE_NEWS_TASK_QUEUE_NAME = "tap-news-dedupe-news-task-queue"
 # SCRAPE_NEWS_TASK_QUEUE_URL = "amqp://hzileycx:iJgtzvRMYnzkdFGSdUYSytpAsW6FYnT_@chimpanzee.rmq.cloudamqp.com/hzileycx"
-SCRAPE_NEWS_TASK_QUEUE_URL = "amqps://crdxxgsm:DKKFtoJFD5nBbyFFqYKCqtoDWearFCuo@gerbil.rmq.cloudamqp.com/crdxxgsm"      #redis thanh
+SCRAPE_NEWS_TASK_QUEUE_URL = "amqps://pizpgglq:Gybn7663NaIbjKwqpWwpXbmZRt5fc0hg@cattle.rmq2.cloudamqp.com/pizpgglq"      #amqp hoang
+# SCRAPE_NEWS_TASK_QUEUE_URL = "amqps://crdxxgsm:DKKFtoJFD5nBbyFFqYKCqtoDWearFCuo@gerbil.rmq.cloudamqp.com/crdxxgsm"      #redis thanh
 SCRAPE_NEWS_TASK_QUEUE_NAME = "tap-news-scrape-news-task-queue"
 
-SLEEP_TIME_IN_SECONDS = 5
+SLEEP_TIME_IN_SECONDS = 1
 
 dedupe_news_queue_client = CloudAMQPClient(DEDUPE_NEWS_TASK_QUEUE_URL, DEDUPE_NEWS_TASK_QUEUE_NAME)
 scrape_news_queue_client = CloudAMQPClient(SCRAPE_NEWS_TASK_QUEUE_URL, SCRAPE_NEWS_TASK_QUEUE_NAME)
@@ -48,6 +50,7 @@ while True:
             try:
                 handle_message(msg)
             except Exception as e:
-                print (e)
-                pass
+                print ('===============================================================')
+                print ('handle_message',e)
+                print ('===============================================================')
         scrape_news_queue_client.sleep(SLEEP_TIME_IN_SECONDS)

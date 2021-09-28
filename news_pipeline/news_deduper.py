@@ -16,7 +16,7 @@ import news_topic_modeling_service_client
 from cloudAMQP_client import CloudAMQPClient
 
 # DEDUPE_NEWS_TASK_QUEUE_URL = "amqp://xzbggvzn:jFOMw3MZ6hzq0htegQTkG2S7fQsrNby1@chimpanzee.rmq.cloudamqp.com/xzbggvzn"
-DEDUPE_NEWS_TASK_QUEUE_URL = "amqps://fhafmgfc:jx85f69NB8LYHJmUde0IWiTe1KoVdvUy@gerbil.rmq.cloudamqp.com/fhafmgfc"      #redis thanh
+DEDUPE_NEWS_TASK_QUEUE_URL = "amqps://gmpzlsjw:MPgc1tkaGgUcqyIfTdTmofNXUuNJMQzy@cattle.rmq2.cloudamqp.com/gmpzlsjw"      #amqp hoang
 DEDUPE_NEWS_TASK_QUEUE_NAME = "tap-news-dedupe-news-task-queue"
 
 
@@ -43,6 +43,7 @@ def handle_message(msg):
     published_at_day_end = published_at_day_begin + datetime.timedelta(days=1)
 
     db = mongodb_client.get_db()
+
     recent_news_list = list(db[NEWS_TABLE_NAME].find({'publishedAt' : {'$gte': published_at_day_begin,
                                                                   '%lt' : published_at_day_end}}))
 
@@ -63,6 +64,7 @@ def handle_message(msg):
                 # Duplicated news, ignore.
                 print ('Duplicated news, ignore.')
                 return
+        db[NEWS_TABLE_NAME].insert_one(task)
 
     task['publishedAt'] = parser.parse(task['publishedAt'])
 
@@ -73,6 +75,7 @@ def handle_message(msg):
     #     task['class'] = topic
 
     db[NEWS_TABLE_NAME].replace_one({'digest': task['digest']}, task, upsert=True)
+
 
 while True:
     if cloudAMQP_client is not None:

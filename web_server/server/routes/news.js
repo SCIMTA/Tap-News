@@ -1,26 +1,50 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var rpc_client = require('../rpc_client/rpc_client')
+var request = require('request');
 
 /* GET news listing. */
-router.get('/userId/:userId/pageNum/:pageNum', function(req, res, next) {
-  console.log('Fetching news...');
-  user_id = req.params['userId'];
-  page_num = req.params['pageNum'];
+router.get("/userId/:userId/pageNum/:pageNum", function (req, res, next) {
+    try {
+        console.log("Fetching news...");
+        user_id = req.params["userId"];
+        page_num = req.params["pageNum"];
 
-  rpc_client.getNewsSummariesForUser(user_id, page_num, response => {
-    res.json(response);
-  });
+        var options = {
+            'method': 'GET',
+            'url': `http://localhost:4040/getNewsSummariesForUser?user_id=${user_id}&page_num=${page_num}`,
+            'headers': {
+                'accept': 'application/json'
+            }
+        };
+        request(options, function (error, response) {
+            if (error) throw new Error(error);
+            res.json(JSON.parse(response.body));
+        });
+    } catch (error) {
+        res.json(error.message);
+    }
 });
 
 /* Post news click event */
-router.post('/userId/:userId/newsId/:newsId', (req, res, next) => {
-  console.log('Logging news click...');
-  user_id = req.params['userId'];
-  news_id = req.params['newsid'];
-
-  rpc_client.logNewsClickForUser(user_id, news_id);
-  res.status(200);
+router.post("/userId/:userId/newsId/:newsId", (req, res, next) => {
+    try {
+        console.log("Logging news click...");
+        user_id = req.params["userId"];
+        news_id = req.params["newsid"];
+        var options = {
+            'method': 'GET',
+            'url': `http://localhost:4040/logNewsClickForUser?user_id=${user_id}&news_id=${news_id}`,
+            'headers': {
+                'accept': 'application/json'
+            }
+        };
+        request(options, function (error, response) {
+            // res.json(JSON.parse(response.body));
+        });
+        res.json([]);
+    } catch (error) {
+        res.json(error.message);
+    }
 });
 
 module.exports = router;

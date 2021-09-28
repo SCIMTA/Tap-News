@@ -71,11 +71,10 @@ def getNewsSummariesForUser(user_id, page_num):
     for news in sliced_news:
         # Remove text field to save bandwidth.
         del news['text']
-        if news['publishedAt'].date() == datetime.today().date():
-            news['time'] = 'today'
+        # if news['publishedAt'].date() == datetime.today().date():
+        #     news['time'] = 'today'
         # if news['class'] == topPrefence:
         #     news['reason'] = "Recommend"
-
     return json.loads(dumps(sliced_news))
 
 def logNewsClickForUser(user_id, news_id):

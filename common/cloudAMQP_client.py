@@ -26,7 +26,7 @@ class CloudAMQPClient:
             self.channel.basic_ack(method_frame.delivery_tag)
             return json.loads(body)
         else:
-            print ("No message returned")
+            # print ("No message returned")
             return None
 
     # sleep

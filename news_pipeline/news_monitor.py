@@ -11,14 +11,15 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import news_api_client
 from cloudAMQP_client import CloudAMQPClient
 
-# REDIS_HOST = 'localhost'
-REDIS_HOST = '192.168.145.229'        #wsl redis
+REDIS_HOST = 'localhost'
+# REDIS_HOST = '192.168.145.229'        #wsl redis
 REDIS_PORT = 6379
 
 NEWS_TIME_OUT_IN_SECONDS = 3600 * 24
 
 # SCRAPE_NEWS_TASK_QUEUE_URL = "amqp://hzileycx:iJgtzvRMYnzkdFGSdUYSytpAsW6FYnT_@chimpanzee.rmq.cloudamqp.com/hzileycx"
-SCRAPE_NEWS_TASK_QUEUE_URL = "amqps://crdxxgsm:DKKFtoJFD5nBbyFFqYKCqtoDWearFCuo@gerbil.rmq.cloudamqp.com/crdxxgsm"      #redis thanh
+# SCRAPE_NEWS_TASK_QUEUE_URL = "amqps://crdxxgsm:DKKFtoJFD5nBbyFFqYKCqtoDWearFCuo@gerbil.rmq.cloudamqp.com/crdxxgsm"      #redis thanh
+SCRAPE_NEWS_TASK_QUEUE_URL = "amqps://pizpgglq:Gybn7663NaIbjKwqpWwpXbmZRt5fc0hg@cattle.rmq2.cloudamqp.com/pizpgglq"      #amqp hoang
 SCRAPE_NEWS_TASK_QUEUE_NAME = 'tap-news-scrape-news-task-queue'
 
 def concatSources(sourcesList):
@@ -40,7 +41,7 @@ print(NEWS_SOURCES)
 
 redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT)
 cloudAMQP_client = CloudAMQPClient(SCRAPE_NEWS_TASK_QUEUE_URL, SCRAPE_NEWS_TASK_QUEUE_NAME)
-SLEEP_TIME_IN_SECONDS = 10
+SLEEP_TIME_IN_SECONDS = 1
 
 while True:
     news_list = news_api_client.getNewsFromSource(NEWS_SOURCES)
