@@ -30,7 +30,7 @@ router.post("/userId/:userId/newsId/:newsId", (req, res, next) => {
     try {
         console.log("Logging news click...");
         user_id = req.params["userId"];
-        news_id = req.params["newsid"];
+        news_id = req.params["newsId"];
         var options = {
             'method': 'GET',
             'url': `http://localhost:4040/logNewsClickForUser?user_id=${user_id}&news_id=${news_id}`,

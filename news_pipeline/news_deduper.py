@@ -45,7 +45,7 @@ def handle_message(msg):
     db = mongodb_client.get_db()
 
     recent_news_list = list(db[NEWS_TABLE_NAME].find({'publishedAt' : {'$gte': published_at_day_begin,
-                                                                  '%lt' : published_at_day_end}}))
+                                                                  '$lt' : published_at_day_end}}))
 
     if recent_news_list is not None and len(recent_news_list) > 0:
         documents = [str(news['text']) for news in recent_news_list]
@@ -85,7 +85,9 @@ while True:
             try:
                 handle_message(msg)
             except Exception as e:
-                print(e)
+                print('===============================================================')
+                print('handle_message', e)
+                print('===============================================================')
                 pass
 
         cloudAMQP_client.sleep(SLEEP_TIME_IN_SECONDS)

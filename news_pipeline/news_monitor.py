@@ -10,7 +10,6 @@ import re
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import news_api_client
 from cloudAMQP_client import CloudAMQPClient
-
 REDIS_HOST = 'localhost'
 # REDIS_HOST = '192.168.145.229'        #wsl redis
 REDIS_PORT = 6379
