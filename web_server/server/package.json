@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "start_docker": "node ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^3.0.0",
@@ -14,10 +15,10 @@
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
-    "jayson": "^2.0.6",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.12",
     "morgan": "~1.9.0",
+    "nodemon": "^2.0.13",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.2",

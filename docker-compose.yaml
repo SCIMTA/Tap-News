@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  tap-news-backend-server:
+    build: ./app
+    depends_on:
+      - redis
+    ports:
+      - "4040:4040"
+    volumes:
+      - ./app:/usr/src/app
+  tap-news-web-server:
+    build: ./web_server/server
+    depends_on:
+      - tap-news-backend-server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web_server/server:/usr/src/server
+  tap-news-web-front-end:
+    build: ./web_server/client
+    depends_on:
+      - tap-news-web-server
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./web_server/client:/usr/src/client
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.0.0/24"
+          gateway: "192.168.0.1"
