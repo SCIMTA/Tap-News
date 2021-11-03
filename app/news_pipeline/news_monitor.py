@@ -4,6 +4,8 @@ import datetime
 import sys
 import redis
 import hashlib
+import news_classify
+import sklearn
 
 # sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 sys.path.append('./')
@@ -31,8 +33,16 @@ redis_client = redis.StrictRedis(REDIS_HOST, REDIS_PORT)
 cloudAMQP_client = CloudAMQPClient(SCRAPE_NEWS_TASK_QUEUE_URL, SCRAPE_NEWS_TASK_QUEUE_NAME)
 SLEEP_TIME_IN_SECONDS = 30
 
+classify_model, tfidf_model = news_classify.load_model()
+
+
 while True:
-    news_list = news_api_client.getNewsFromSource()
+    news_list_raw = news_api_client.getNewsFromSource()
+    news_list = []
+    for news in news_list_raw:
+        text = news['title'] + ' ' + news['content']
+        if news_classify.batdongsan_filter(text, classify_model, tfidf_model) > 0.4:
+            news_list.append(news)
 
     num_of_new_news = 0
 

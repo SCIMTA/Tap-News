@@ -22,30 +22,50 @@ DEFAULT_SOURCES = CNN
 #     return articles
 
 
-def getNewsFromSource(keyword='bất động sản'):
-    er = EventRegistry(apiKey='9f2df3b8-aab4-4d51-ac5a-492f056fd824')
-    qStr = """
-    {
-        "$query": {
-            "$and": [
-                {
-                    "keyword": """ + f'"{keyword}"' + """ ,
-                    "keywordLoc": "body"
-                },
-                {
-                    "lang": "vie"
-                }
-            ]
-        },
-        "$filter": {
-            "forceMaxDataTimeWindow": "31",
-            "dataType": [
-                "news"
-            ]
-        }
-    }
-    """
-    q = QueryArticlesIter.initWithComplexQuery(qStr)
+# def getNewsFromSource(keyword='giao duc'):
+#     er = EventRegistry(apiKey='9f2df3b8-aab4-4d51-ac5a-492f056fd824', allowUseOfArchive = False)
+#     qStr = """
+#     {
+#         "$query": {
+#             "$and": [
+#                 {
+#                     "keyword": """ + f'"{keyword}"' + """ ,
+#                     "keywordLoc": "body"
+#                 },
+#                 {
+#                     "lang": "vie"
+#                 }
+#             ]
+#         },
+#         "$filter": {
+#             "forceMaxDataTimeWindow": "31",
+#             "dataType": [
+#                 "news"
+#             ]
+#         }
+#     }
+#     """
+#
+#     q = QueryArticlesIter.initWithComplexQuery(qStr)
+#     # change maxItems to get the number of results that you want
+#     articles = []
+#     for article in q.execQuery(er, maxItems=10):
+#         new_article_format = {'author': article['source']['title'], 'title': article['title'],
+#                               'description': article['body'],
+#                               'url': article['url'], 'urlToImage': article['image'],
+#                               'publishedAt': article['dateTime'], 'content': article['body'],
+#                               'source': {}}
+#         new_article_format['source']['id'] = article['source']['uri']
+#         new_article_format['source']['name'] = article['source']['title']
+#         articles.append(new_article_format)
+#     print(articles)
+#     return articles
+
+def getNewsFromSource(keyword='giao duc'):
+    er = EventRegistry(apiKey='9f2df3b8-aab4-4d51-ac5a-492f056fd824', allowUseOfArchive=False)
+    q = QueryArticlesIter(keywords=[""],
+                          lang=["vie"],
+                          dataType=["news", "pr"])
     # change maxItems to get the number of results that you want
     articles = []
     for article in q.execQuery(er, maxItems=50):
@@ -57,8 +77,8 @@ def getNewsFromSource(keyword='bất động sản'):
         new_article_format['source']['id'] = article['source']['uri']
         new_article_format['source']['name'] = article['source']['title']
         articles.append(new_article_format)
-    print(articles)
+    # print(articles)
     return articles
 
 # getNewsVietnamese()
-# getNewsFromSource()
+# getNewsFromSource("")

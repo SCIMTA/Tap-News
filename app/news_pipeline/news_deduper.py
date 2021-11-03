@@ -46,6 +46,7 @@ def handle_message(msg):
     recent_news_list = list(db[NEWS_TABLE_NAME].find({'publishedAt' : {'$gte': published_at_day_begin,
                                                                   '$lt' : published_at_day_end}}))
 
+    # Handle duplicate news
     if recent_news_list is not None and len(recent_news_list) > 0:
         documents = [str(news['text']) for news in recent_news_list]
         documents.insert(0, text)
