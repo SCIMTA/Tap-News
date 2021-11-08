@@ -41,6 +41,6 @@ def get_news_from_crawler():
     return articles
 
 
-if __name__ == '__main__':
-    a = get_news_from_crawler()
-    print(len(a))
+# if __name__ == '__main__':
+#     a = get_news_from_crawler()
+#     print(len(a))
