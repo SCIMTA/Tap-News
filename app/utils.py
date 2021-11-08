@@ -3,6 +3,8 @@ import string
 import time
 from datetime import datetime
 import pandas as pd
+from dateutil.parser import parse
+
 
 class BCOLORS:
     HEADER = '\033[95m'
@@ -27,9 +29,15 @@ def convert_timestamp_hour_min(in_time):
         return str(pd.Timestamp.now() - pd.Timedelta(hours=1))
     if "giờ trước" in in_time:
         return str(pd.Timestamp.now() - pd.Timedelta(hours=int(str_time)))
+    return str(pd.to_datetime(str(in_time)))
 
 def convert_not_timestamp(not_timestamp):
     time_str = pd.to_datetime(str(not_timestamp))
+    return str(time_str)
+
+def convert_dash_time(in_time):
+    in_time = re.sub('-', '', in_time)
+    time_str = pd.to_datetime(in_time)
     return str(time_str)
 
 # selenium only
@@ -52,6 +60,12 @@ def scroll_page(driver):
             break
         last_height = new_height
 
+def slow_scroll_page(driver, speed=8):
+    current_scroll_position, new_height= 0, 1
+    while current_scroll_position <= new_height:
+        current_scroll_position += speed
+        driver.execute_script("window.scrollTo(0, {});".format(current_scroll_position))
+        new_height = driver.execute_script("return document.body.scrollHeight")
 
 def news_to_json(author, title, description, url, urlToImage, publishedAt, content, source_id, source_name):
     new_article_format = {'author': author, 'title': title,

@@ -7,8 +7,11 @@ import hashlib
 import news_classify
 import sklearn
 
+
 # sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 sys.path.append('./')
+
+from common import get_news_from_crawler
 
 from common import news_api_client
 # import news_api_client
@@ -37,12 +40,12 @@ classify_model, tfidf_model = news_classify.load_model()
 
 
 while True:
-    news_list_raw = news_api_client.getNewsFromSource()
-    news_list = []
-    for news in news_list_raw:
-        text = news['title'] + ' ' + news['content']
-        if news_classify.batdongsan_filter(text, classify_model, tfidf_model) > 0.4:
-            news_list.append(news)
+    news_list_raw = news_api_client.get_news_from_crawler()
+    news_list = news_list_raw
+    # for news in news_list_raw:
+    #     text = news['title'] + ' ' + news['content']
+    #     if news_classify.batdongsan_filter(text, classify_model, tfidf_model) > 0.4:
+    #         news_list.append(news)
 
     num_of_new_news = 0
 
