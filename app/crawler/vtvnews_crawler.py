@@ -1,3 +1,5 @@
+import os
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -7,16 +9,22 @@ import platform
 import sys
 
 sys.path.append('../')
-from utils import convert_not_timestamp, scroll_page, news_to_json
+from utils import convert_not_timestamp, scroll_page, news_to_json, get_driver
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
-chrome_options.add_argument("--window-size=1920x1080")
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument(
+    "user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 11_14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4606.211 Safari/537.36'")
+chrome_options.add_argument("--window-size=1280x720")
 
 if platform.system() == 'Windows':
     driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
+    # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
 elif platform.system() == 'Linux':
-    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver")
+    # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
+    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver")
 
 
 def vtvnews_crawler(num_of_page):

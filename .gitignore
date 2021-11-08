@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+app/models/news_classify.skl
 build/
 develop-eggs/
 dist/

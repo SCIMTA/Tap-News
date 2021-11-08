@@ -7,17 +7,9 @@ import platform
 import sys
 
 sys.path.append('../')
-from utils import convert_timestamp, scroll_page, news_to_json, convert_dash_time
+from utils import convert_timestamp, scroll_page, news_to_json, convert_dash_time, get_driver
 
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--window-size=1920x1080")
-
-if platform.system() == 'Windows':
-    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
-elif platform.system() == 'Linux':
-    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver")
-
+driver = get_driver()
 
 def hanoimoi_crawler(num_of_page):
     url = "http://www.hanoimoi.com.vn/Danh-muc-tin/181/Bat-dong-san"

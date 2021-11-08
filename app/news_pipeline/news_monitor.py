@@ -11,7 +11,7 @@ import sklearn
 # sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 sys.path.append('./')
 
-from common import get_news_from_crawler
+from crawler import main_crawler
 
 from common import news_api_client
 # import news_api_client
@@ -40,7 +40,7 @@ classify_model, tfidf_model = news_classify.load_model()
 
 
 while True:
-    news_list_raw = news_api_client.get_news_from_crawler()
+    news_list_raw = main_crawler.get_news_from_crawler()
     news_list = news_list_raw
     # for news in news_list_raw:
     #     text = news['title'] + ' ' + news['content']

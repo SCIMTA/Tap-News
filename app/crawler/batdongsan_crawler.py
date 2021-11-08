@@ -10,19 +10,9 @@ import sys
 
 sys.path.append('../')
 from utils import convert_not_timestamp, scroll_page, news_to_json, \
-    convert_timestamp_hour_min, slow_scroll_page
+    convert_timestamp_hour_min, slow_scroll_page, get_driver
 
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 11_14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4606.211 Safari/537.36'")
-chrome_options.add_argument("--window-size=1920x1080")
-
-def get_driver():
-    if platform.system() == 'Windows':
-        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
-    elif platform.system() == 'Linux':
-        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver")
-    return driver
+driver = get_driver()
 
 def batdongsan_thitruong_crawler(num_of_page):
     driver = get_driver()

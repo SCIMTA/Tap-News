@@ -1,9 +1,12 @@
 import re
+import os
 import string
 import time
 from datetime import datetime
 import pandas as pd
-from dateutil.parser import parse
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import platform
 
 
 class BCOLORS:
@@ -17,6 +20,22 @@ class BCOLORS:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+def get_driver():
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument(
+        "user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 11_14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4606.211 Safari/537.36'")
+    chrome_options.add_argument("--window-size=1280x720")
+
+    if platform.system() == 'Windows':
+        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
+        # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
+    elif platform.system() == 'Linux':
+        # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
+        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver")
+    return driver
 
 def convert_timestamp(timestamp):
     dt_object = datetime.fromtimestamp(timestamp)
