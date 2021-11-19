@@ -1,4 +1,4 @@
 {
-  "mongoDbUri": "mongodb://mongo:27017",
+  "mongoDbUri": "mongodb://mongo:27017/tap-news",
   "jwtSecret": "7U>~g7#8qG^Z_ah4"
 }
