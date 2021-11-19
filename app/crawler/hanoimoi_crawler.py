@@ -47,4 +47,4 @@ def hanoimoi_crawler(articles_queue:QueueClient):
         except:
             pass
     # print(articles)
-    driver.close()
+    driver.execute_script("window.close()")

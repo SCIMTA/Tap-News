@@ -37,4 +37,4 @@ def laodong_crawler(articles_queue:QueueClient):
             except:
                 pass
 
-    driver.close()
+    driver.execute_script("window.close()")

@@ -7,6 +7,7 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import platform
+from selenium.webdriver.common.keys import Keys
 
 
 class BCOLORS:
@@ -20,20 +21,22 @@ class BCOLORS:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument(
+    "user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 11_14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4606.211 Safari/537.36'")
+chrome_options.add_argument("--window-size=1280x720")
+if platform.system() == 'Windows':
+    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
+elif platform.system() == 'Linux':
+    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver_linux")
+elif platform.system() == 'Darwin':
+    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver_mac")
+
 def get_driver():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument(
-        "user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 11_14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4606.211 Safari/537.36'")
-    chrome_options.add_argument("--window-size=1280x720")
-    if platform.system() == 'Windows':
-        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
-    elif platform.system() == 'Linux':
-        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver_linux")
-    elif platform.system() == 'Darwin':
-        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver_mac")
+    driver.execute_script("window.open()")
     return driver
 
 def convert_timestamp(timestamp):

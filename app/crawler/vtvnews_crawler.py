@@ -49,4 +49,4 @@ def vtvnews_crawler(articles_queue:QueueClient):
             articles_queue.sendMessage(new_article_format)
         except:
             pass
-    driver.close()
+    driver.execute_script("window.close()")

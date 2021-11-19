@@ -25,7 +25,7 @@ def vnexpress_crawler(nums_of_page):
             thumb = article.find_element(By.XPATH, './/div//a//picture//source')
             print(thumb.get_property('srcset'))
         driver.execute_script("document.getElementsByClassName('btn-page next-page ')[0].click()")
-    driver.close()
+    driver.execute_script("window.close()")
 
 
 def vnexpress_request(limit, page):

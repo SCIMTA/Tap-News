@@ -36,4 +36,4 @@ def vietnamnet_crawler(articles_queue:QueueClient):
             except:
                 pass
         # print(article)
-    driver.close()
+    driver.execute_script("window.close()")

@@ -30,7 +30,12 @@ batdongsan_crawler.batdongsan_thegioi_crawler
 ]
 def start_crawler():
     for task in list_task:
-        threading.Thread(target=task,args=(articles_queue,)).start()
+        print("Start task crawler {}...........".format(task.__name__))
+        try:
+            task(articles_queue)
+        except Exception as e:
+            print("Error task {}: {}".format(task.__name__, e.__str__()))
+        # threading.Thread(target=task,args=(articles_queue,)).start()
 
 
 def get_news_from_crawler():

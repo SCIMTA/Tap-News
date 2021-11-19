@@ -53,7 +53,7 @@ def batdongsan_thitruong_crawler(articles_queue:QueueClient):
         articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
-    driver.close()
+    driver.execute_script("window.close()")
 
 
 def batdongsan_phantich_crawler(articles_queue:QueueClient):
@@ -109,7 +109,7 @@ def batdongsan_phantich_crawler(articles_queue:QueueClient):
         articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
-    driver.close()
+    driver.execute_script("window.close()")
 
 
 def batdongsan_chinhsach_crawler(articles_queue:QueueClient):
@@ -165,7 +165,7 @@ def batdongsan_chinhsach_crawler(articles_queue:QueueClient):
         articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
-    driver.close()
+    driver.execute_script("window.close()")
 
 
 def batdongsan_quyhoach_crawler(articles_queue:QueueClient):
@@ -221,7 +221,7 @@ def batdongsan_quyhoach_crawler(articles_queue:QueueClient):
         articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
-    driver.close()
+    driver.execute_script("window.close()")
 
 
 def batdongsan_thegioi_crawler(articles_queue:QueueClient):
@@ -277,4 +277,4 @@ def batdongsan_thegioi_crawler(articles_queue:QueueClient):
         articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
-    driver.close()
+    driver.execute_script("window.close()")
