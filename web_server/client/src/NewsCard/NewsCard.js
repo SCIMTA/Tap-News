@@ -40,7 +40,7 @@ class NewsCard extends React.Component {
           <div className="col s8">
             <div className="news-intro-col">
               <div className="new-intro-panel">
-                <h4>{this.props.news.title.trim()}</h4>
+                <h4>{this.props.news.content.trim()}</h4>
                 <div className="news-description">
                   <p>
                     {description.length > 250
@@ -58,9 +58,9 @@ class NewsCard extends React.Component {
                         {this.props.news.reason}
                       </div>
                     )}
-                    {this.props.news.time != null && (
+                    {this.props.news.publishedAt != null && (
                       <div className="chip amber news-chip">
-                        {this.props.news.time}
+                        {this.props.news.publishedAt["$date"]}
                       </div>
                     )}
                   </div>

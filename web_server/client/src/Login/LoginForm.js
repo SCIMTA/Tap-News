@@ -52,7 +52,7 @@ const LoginForm = ({ onSubmit, onChange, errors, user }) => (
           <input
             type="submit"
             className="waves-effect waves-light btn indigo lighten-1"
-            value="Log in"
+            value="Đăng nhập"
           />
         </div>
         <div className="row">
