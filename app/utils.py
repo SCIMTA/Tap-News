@@ -28,13 +28,12 @@ def get_driver():
     chrome_options.add_argument(
         "user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 11_14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4606.211 Safari/537.36'")
     chrome_options.add_argument("--window-size=1280x720")
-
     if platform.system() == 'Windows':
         driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
-        # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
     elif platform.system() == 'Linux':
-        # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
-        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver")
+        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver_linux")
+    elif platform.system() == 'Darwin':
+        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver_mac")
     return driver
 
 def convert_timestamp(timestamp):

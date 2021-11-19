@@ -1,37 +1,21 @@
-import os
-
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import time
-import platform
 import sys
+from common.queue_client import QueueClient
 
 sys.path.append('../')
 from utils import convert_not_timestamp, scroll_page, news_to_json, get_driver
 
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
-chrome_options.add_argument(
-    "user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 11_14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4606.211 Safari/537.36'")
-chrome_options.add_argument("--window-size=1280x720")
-
-if platform.system() == 'Windows':
-    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
-    # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
-elif platform.system() == 'Linux':
-    # driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", options=chrome_options)
-    driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./crawler/chromedriver")
+driver = get_driver()
 
 
-def vtvnews_crawler(num_of_page):
+
+def vtvnews_crawler(articles_queue:QueueClient):
+    num_of_page=2
     url = "https://vtv.vn/kinh-te/bat-dong-san.htm"
     driver.get(url)
     wait = WebDriverWait(driver, 3)
-    articles = []
 
     # Handle infinitive load
     for i in range(int(num_of_page)*2):
@@ -62,9 +46,7 @@ def vtvnews_crawler(num_of_page):
             new_article_format = news_to_json("VTVNews", title, description, url,
                                               urlToImage, publishedAt,
                                               description, "vtv.vn", "VTV.vn")
-            articles.append(new_article_format)
+            articles_queue.sendMessage(new_article_format)
         except:
             pass
-    # print(articles)
     driver.close()
-    return articles

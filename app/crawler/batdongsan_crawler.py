@@ -1,22 +1,16 @@
-import re
-
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-import time
-import platform
 import sys
+from common.queue_client import QueueClient
 
 sys.path.append('../')
-from utils import convert_not_timestamp, scroll_page, news_to_json, \
-    convert_timestamp_hour_min, slow_scroll_page, get_driver
+from utils import news_to_json, convert_timestamp_hour_min, get_driver
 
 driver = get_driver()
 
-def batdongsan_thitruong_crawler(num_of_page):
+def batdongsan_thitruong_crawler(articles_queue:QueueClient):
+    num_of_page=2
     driver = get_driver()
-    articles = []
     sub_list = "tin-thi-truong"
     for i in range(num_of_page):
         url = "https://batdongsan.com.vn/{}/p{}".format(sub_list, i+1)
@@ -42,7 +36,7 @@ def batdongsan_thitruong_crawler(num_of_page):
                 new_article_format = news_to_json("Batdongsan/{}".format(sub_list), title, description, url,
                                                   urlToImage, publishedAt,
                                                   description, "batdongsan.com.vn/{}".format(sub_list), "BATDONGSAN.com.vn")
-                articles.append(new_article_format)
+                articles_queue.sendMessage(new_article_format)
             except Exception as err:
                 print(err)
                 pass
@@ -56,16 +50,15 @@ def batdongsan_thitruong_crawler(num_of_page):
         top_new = news_to_json("Batdongsan/{}".format(sub_list), top_new_title, top_new_description, top_new_url,
                               top_new_urlToImage, top_new_publishedAt,
                               top_new_description, "batdongsan.com.vn/{}".format(sub_list), "BATDONGSAN.com.vn")
-        articles.append(top_new)
+        articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
     driver.close()
-    return articles
 
 
-def batdongsan_phantich_crawler(num_of_page):
+def batdongsan_phantich_crawler(articles_queue:QueueClient):
+    num_of_page=2
     driver = get_driver()
-    articles = []
     sub_list = "phan-tich-nhan-dinh"
     for i in range(num_of_page):
         url = "https://batdongsan.com.vn/{}/p{}".format(sub_list, i + 1)
@@ -96,7 +89,7 @@ def batdongsan_phantich_crawler(num_of_page):
                                                   urlToImage, publishedAt,
                                                   description, "batdongsan.com.vn/{}".format(sub_list),
                                                   "BATDONGSAN.com.vn")
-                articles.append(new_article_format)
+                articles_queue.sendMessage(new_article_format)
             except Exception as err:
                 print(err)
                 pass
@@ -113,16 +106,15 @@ def batdongsan_phantich_crawler(num_of_page):
         top_new = news_to_json("Batdongsan/{}".format(sub_list), top_new_title, top_new_description, top_new_url,
                                top_new_urlToImage, top_new_publishedAt,
                                top_new_description, "batdongsan.com.vn/{}".format(sub_list), "BATDONGSAN.com.vn")
-        articles.append(top_new)
+        articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
     driver.close()
-    return articles
 
 
-def batdongsan_chinhsach_crawler(num_of_page):
+def batdongsan_chinhsach_crawler(articles_queue:QueueClient):
+    num_of_page=2
     driver = get_driver()
-    articles = []
     sub_list = "chinh-sach-quan-ly"
     for i in range(num_of_page):
         url = "https://batdongsan.com.vn/{}/p{}".format(sub_list, i + 1)
@@ -153,7 +145,7 @@ def batdongsan_chinhsach_crawler(num_of_page):
                                                   urlToImage, publishedAt,
                                                   description, "batdongsan.com.vn/{}".format(sub_list),
                                                   "BATDONGSAN.com.vn")
-                articles.append(new_article_format)
+                articles_queue.sendMessage(new_article_format)
             except Exception as err:
                 print(err)
                 pass
@@ -170,16 +162,15 @@ def batdongsan_chinhsach_crawler(num_of_page):
         top_new = news_to_json("Batdongsan/{}".format(sub_list), top_new_title, top_new_description, top_new_url,
                                top_new_urlToImage, top_new_publishedAt,
                                top_new_description, "batdongsan.com.vn/{}".format(sub_list), "BATDONGSAN.com.vn")
-        articles.append(top_new)
+        articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
     driver.close()
-    return articles
 
 
-def batdongsan_quyhoach_crawler(num_of_page):
+def batdongsan_quyhoach_crawler(articles_queue:QueueClient):
+    num_of_page=2
     driver = get_driver()
-    articles = []
     sub_list = "thong-tin-quy-hoach"
     for i in range(num_of_page):
         url = "https://batdongsan.com.vn/{}/p{}".format(sub_list, i + 1)
@@ -210,7 +201,7 @@ def batdongsan_quyhoach_crawler(num_of_page):
                                                   urlToImage, publishedAt,
                                                   description, "batdongsan.com.vn/{}".format(sub_list),
                                                   "BATDONGSAN.com.vn")
-                articles.append(new_article_format)
+                articles_queue.sendMessage(new_article_format)
             except Exception as err:
                 print(err)
                 pass
@@ -227,16 +218,15 @@ def batdongsan_quyhoach_crawler(num_of_page):
         top_new = news_to_json("Batdongsan/{}".format(sub_list), top_new_title, top_new_description, top_new_url,
                                top_new_urlToImage, top_new_publishedAt,
                                top_new_description, "batdongsan.com.vn/{}".format(sub_list), "BATDONGSAN.com.vn")
-        articles.append(top_new)
+        articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
     driver.close()
-    return articles
 
 
-def batdongsan_thegioi_crawler(num_of_page):
+def batdongsan_thegioi_crawler(articles_queue:QueueClient):
+    num_of_page=2
     driver = get_driver()
-    articles = []
     sub_list = "bat-dong-san-the-gioi"
     for i in range(num_of_page):
         url = "https://batdongsan.com.vn/{}/p{}".format(sub_list, i + 1)
@@ -267,7 +257,7 @@ def batdongsan_thegioi_crawler(num_of_page):
                                                   urlToImage, publishedAt,
                                                   description, "batdongsan.com.vn/{}".format(sub_list),
                                                   "BATDONGSAN.com.vn")
-                articles.append(new_article_format)
+                articles_queue.sendMessage(new_article_format)
             except Exception as err:
                 print(err)
                 pass
@@ -284,8 +274,7 @@ def batdongsan_thegioi_crawler(num_of_page):
         top_new = news_to_json("Batdongsan/{}".format(sub_list), top_new_title, top_new_description, top_new_url,
                                top_new_urlToImage, top_new_publishedAt,
                                top_new_description, "batdongsan.com.vn/{}".format(sub_list), "BATDONGSAN.com.vn")
-        articles.append(top_new)
+        articles_queue.sendMessage(top_new)
         # print(len(articles))
         # print(article)
     driver.close()
-    return articles

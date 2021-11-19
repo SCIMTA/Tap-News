@@ -1,4 +1,4 @@
 {
-    "mongoDbUri": "mongodb+srv://thanh:thanhtn123@cluster0.un40r.mongodb.net/tap-news?retryWrites=true&w=majority",
-    "jwtSecret": "7U>~g7#8qG^Z_ah4"
-  }
+  "mongoDbUri": "mongodb://mongo:27017",
+  "jwtSecret": "7U>~g7#8qG^Z_ah4"
+}

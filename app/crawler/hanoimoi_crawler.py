@@ -1,21 +1,19 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import time
-import platform
 import sys
+from common.queue_client import QueueClient
 
 sys.path.append('../')
-from utils import convert_timestamp, scroll_page, news_to_json, convert_dash_time, get_driver
+from utils import news_to_json, convert_dash_time, get_driver
 
 driver = get_driver()
 
-def hanoimoi_crawler(num_of_page):
+def hanoimoi_crawler(articles_queue:QueueClient):
+    num_of_page=2
     url = "http://www.hanoimoi.com.vn/Danh-muc-tin/181/Bat-dong-san"
     driver.get(url)
     wait = WebDriverWait(driver, 3)
-    articles = []
 
     # Handle infinitive load
     for i in range(int(num_of_page)*2):
@@ -45,9 +43,8 @@ def hanoimoi_crawler(num_of_page):
             new_article_format = news_to_json("HanoiMoi", title, description, url,
                                               urlToImage, publishedAt,
                                               description, "hanoimoi.com.vn", "HanoiMoi.com.vn")
-            articles.append(new_article_format)
+            articles_queue.sendMessage(new_article_format)
         except:
             pass
     # print(articles)
     driver.close()
-    return articles

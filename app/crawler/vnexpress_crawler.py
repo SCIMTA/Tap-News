@@ -1,26 +1,12 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import json
-import pandas as pd
-import time
-import platform
 import sys
 import requests
+from common.queue_client import QueueClient
 
 sys.path.append('../')
-from utils import convert_timestamp, news_to_json
-
-# chrome_options = Options()
-# chrome_options.add_argument("--incognito")
-# chrome_options.add_argument("--window-size=1920x1080")
-#
-# if platform.system() == 'Windows':
-#     driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
-# elif platform.system() == 'Linux':
-#     driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver")
+from utils import convert_timestamp, news_to_json,get_driver
+driver = get_driver()
 
 
 def vnexpress_crawler(nums_of_page):
@@ -63,7 +49,9 @@ def vnexpress_request(limit, page):
     response = requests.request("GET", url, headers=headers, data=payload, verify=False)
     return response
 
-def vnexpress_crawler_api(limit, page):
+def vnexpress_crawler_api(articles_queue:QueueClient):
+    limit=40
+    page=3
     # parse json
     articles = []
     print("Fetching VNExpress: {} news.".format(limit*page))
@@ -84,7 +72,8 @@ def vnexpress_crawler_api(limit, page):
                                                article['share_url'], article['thumbnail_url'],
                                                convert_timestamp(article['publish_time']), article['lead'],
                                                "vnexpress.net", "VNExpress.net")
-            articles.append(new_article_format)
+            articles_queue.sendMessage(new_article_format)
+            # articles.append(new_article_format)
 
     # print(articles)
     return articles

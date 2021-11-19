@@ -5,12 +5,17 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
   tap-news-backend-server:
     build: ./app
     depends_on:
       - redis
     ports:
       - "4040:4040"
+      - "4041:4041"
     volumes:
       - ./app:/usr/src/app
   tap-news-web-server:
@@ -29,11 +34,11 @@ services:
       - "3001:3001"
     volumes:
       - ./web_server/client:/usr/src/client
-networks:
-  default:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: "192.168.0.0/24"
-          gateway: "192.168.0.1"
+# networks:
+#   default:
+#     driver: bridge
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: "192.168.0.0/24"
+#           gateway: "192.168.0.1"
