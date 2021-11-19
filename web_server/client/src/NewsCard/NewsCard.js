@@ -26,6 +26,11 @@ class NewsCard extends React.Component {
     fetch(request);
   }
 
+  timeSTampToDate(timeStamp) {
+    const date = new Date(timeStamp);
+    return date.toLocaleDateString();
+  }
+
   render() {
     const { description } = this.props.news;
     return (
@@ -60,7 +65,9 @@ class NewsCard extends React.Component {
                     )}
                     {this.props.news.publishedAt != null && (
                       <div className="chip amber news-chip">
-                        {this.props.news.publishedAt["$date"]}
+                        {this.timeSTampToDate(
+                          this.props.news.publishedAt["$date"]
+                        )}
                       </div>
                     )}
                   </div>
