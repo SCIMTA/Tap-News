@@ -23,12 +23,17 @@ class BCOLORS:
 
 print('platform.system ',platform.system())
 chrome_options = Options()
+chrome_options.add_argument("start-maximized")
+# options.addArguments("enable-automation")
 chrome_options.add_argument("--headless")
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
-# chrome_options.add_argument(
-#     "user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 11_14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4606.211 Safari/537.36'")
-chrome_options.add_argument("--window-size=1280x720")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-infobars")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--disable-browser-side-navigation")
+chrome_options.add_argument("--disable-gpu");
+chrome_options.add_argument(
+    "user-agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 11_14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4606.211 Safari/537.36'")
+# chrome_options.add_argument("--window-size=1280x720")
 if platform.system() == 'Windows':
     driver = webdriver.Chrome(chrome_options=chrome_options, executable_path="./chromedriver.exe")
 elif platform.system() == 'Linux':
