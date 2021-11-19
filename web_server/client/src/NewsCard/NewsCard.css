@@ -3,6 +3,9 @@
   color: black;
   height: 100%;
 }
+.new-intro-panel {
+  text-align: left;
+}
 
 .news-intro-panel {
   margin: auto 5px;

@@ -43,6 +43,4 @@ def getNewsSummariesForUser(user_id, page_num):
 
         sliced_news = total_news[begin_index:end_index]
 
-    for news in sliced_news:
-        del news['title']
     return json.loads(dumps(sliced_news))

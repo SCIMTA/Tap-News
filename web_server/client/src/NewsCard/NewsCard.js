@@ -45,7 +45,7 @@ class NewsCard extends React.Component {
           <div className="col s8">
             <div className="news-intro-col">
               <div className="new-intro-panel">
-                <h4>{this.props.news.content.trim()}</h4>
+                <h4>{this.props.news.title.trim()}</h4>
                 <div className="news-description">
                   <p>
                     {description.length > 250
