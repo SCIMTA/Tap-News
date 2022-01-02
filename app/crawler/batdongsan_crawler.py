@@ -1,9 +1,10 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import sys
+sys.path.append('./')
 from common.queue_client import QueueClient
 
-sys.path.append('../')
+
 from utils import news_to_json, convert_timestamp_hour_min, get_driver
 
 driver = get_driver()

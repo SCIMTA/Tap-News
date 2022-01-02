@@ -1,107 +1,54 @@
-import re
-import gdown
-import pickle
-import joblib
-import os
-import scipy as sp
-from sklearn.feature_extraction.text import TfidfTransformer, HashingVectorizer
+# import classify_bert as cls_bert
+import classify_naivebayes as cls_naivebayes
+import classify_bert as cls_bert
+import sys
+from time import time
 
-def process(row):
-    """
-        row: a row of dataframe
-        return: processed row
-    """
+sys.path.append('./')
+from common.queue_client import QueueClient
+from task_queue_name import CLASSIFY_NEWS_TASK_QUEUE_NAME, FETCHER_NEWS_TASK_QUEUE_NAME
 
-    row = str(row)
-    # lowercase content
-    row = row.lower()
-
-    # Convert url to URL
-    row = re.sub('((www\.[^\s]+)|(https?://[^\s]+))', 'URL', row)
-
-    # Convert email to email
-    row = re.sub(r'[\w\.-]+@[\w\.-]+', 'email', row)
-
-    # Remove not alphameric
-    row = re.sub(r'[^\w]', ' ', row)
-
-    # Remove numbers
-    row = ''.join([j for j in row if not j.isdigit()])
-
-    # Remove emotion icons
-    row = re.sub(
-        ':\)|;\)|:-\)|\(-:|:-D|=D|:P|xD|X-p|\^\^|:-*|\^\.\^|\^\-\^|\^\_\^|\,-\)|\)-:|:\'\(|:\(|:-\(|:\S|T\.T|\.\_\.|:<|:-\S|:-<|\*\-\*|:O|=O|=\-O|O\.o|XO|O\_O|:-\@|=/|:/|X\-\(|>\.<|>=\(|D:',
-        '', row)
-
-    # Remove multiple marks
-    row = re.sub(r"(\!)\1+", ' ', row)
-    row = re.sub(r"(\?)\1+", ' ', row)
-    row = re.sub(r"(\.)\1+", ' ', row)
-
-    # Trim
-    row = row.strip('\'"')
-    row = row.strip()
-
-    # remove addititonal white spaces
-    row = re.sub('[\s]+', ' ', row)
-    row = re.sub('[\n]+', ' ', row)
-
-    return row
+SLEEP_TIME_IN_SECONDS = 1
+# model_nb = cls_naivebayes.load_model()
+model_bert = cls_bert.load_model()
+classify_queue_client = QueueClient(CLASSIFY_NEWS_TASK_QUEUE_NAME)
+fetcher_queue_client = QueueClient(FETCHER_NEWS_TASK_QUEUE_NAME)
 
 
-def download_model():
-    try:
-        # Download SVM model
-        print("###Downloading model from ggdrive###")
-        url_svm = "https://drive.google.com/uc?id=1riWxNbsxdAKuGj8YNXSOb7dje_-8xAWC"
-        output_svm = "../models/news_classify.skl"
-        gdown.download(url_svm, output_svm, quiet=False)
-
-        url_tfidf = "https://drive.google.com/uc?id=1YDr3Wb35qwsIUS4BzV4fx5WCTO85UnyP"
-        output_tfidf = "../models/tfidf.pickle"
-        gdown.download(url_tfidf, output_tfidf, quiet=False)
-        print("##Success!!")
-    except Exception as err:
-        print("Something happend...")
-        print(err)
+##### naive bayes
+# def handle_message(news):
+#     classify_model, tfidf_model = model_nb
+#     text = news['title'] + ' ' + news['content']
+#     score = cls_naivebayes.batdongsan_filter(text, classify_model, tfidf_model)
+#     print('Classify', news['title'], score)
+#     if score > 0.4:
+#         fetcher_queue_client.sendMessage(news)
+#     else:
+#         print("Classify not Bat_dong_san")
 
 
-def load_model():
-    """
-        Load classify model
-
-        return: classify_model, tfidf_model
-    """
-    if (os.path.isfile("./models/news_classify.skl")):
-        try:
-            # Assign model
-            classify_model = joblib.load("./models/news_classify.skl")
-            tfidf_model = pickle.load(open("./models/tfidf.pickle", "rb"))
-        except Exception as err:
-            print("Something happend, redownloading model...")
-            # download_model()
-            # Assign model
-            classify_model = joblib.load("../models/news_classify.skl")
-            tfidf_model = pickle.load(open("../models/tfidf.pickle", "rb"))
-
-        print("Model loaded!!!!!!!!!")
-
+#### bert
+def handle_message(news):
+    model, encoder, tokenizer = model_bert
+    text = news['title'] + ' ' + news['content']
+    t_start = time()
+    predict_label, score = cls_bert.batdongsan_filter_bert(text, model, encoder, tokenizer)
+    print("[ANNOUNCE] Predicted success after {} seconds".format(time() - t_start))
+    print('[Classify]', news['title'], '| label:', predict_label, '| score: ', score)
+    if predict_label == "Bat_dong_san":
+        fetcher_queue_client.sendMessage(news)
     else:
-        download_model()
-        # Assign model
-        classify_model = joblib.load("../models/news_classify.skl")
-        tfidf_model = pickle.load(open("../models/tfidf.pickle", "rb"))
-        print("Model loaded!!!!!!!!!")
+        print("[Classify] not Bat_dong_san")
 
-    return classify_model, tfidf_model
-
-
-def batdongsan_filter(content, classify_model, tfidf_model):
-    hash_size = 5000
-    hashed_vector = HashingVectorizer(n_features=hash_size, ngram_range=(1, 3)).fit_transform([content])
-    tfidf_vector = tfidf_model.transform(hashed_vector)
-    sparse_m = sp.sparse.bsr_matrix(tfidf_vector)
-    res = classify_model.predict_proba(sparse_m.todense())
-    print("Content: " , content[:30] , '... | ' , "score: " , res[0][2])
-    return res[0][2]
-
+while True:
+    msg = classify_queue_client.getMessage()
+    if msg is not None:
+        # Handle message
+        try:
+            handle_message(msg)
+        except Exception as e:
+            print('===============================================================')
+            print('Exception classify')
+            print(e)
+            print('===============================================================')
+    classify_queue_client.sleep(SLEEP_TIME_IN_SECONDS)
