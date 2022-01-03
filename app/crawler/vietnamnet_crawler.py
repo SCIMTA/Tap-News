@@ -11,7 +11,7 @@ driver = get_driver()
 def vietnamnet_crawler(articles_queue:QueueClient):
     num_of_page=2
     for i in range(num_of_page):
-        url = "https://vietnamnet.vn/vn/bat-dong-san/trang{}/".format(i+1)
+        url = "https://vietnamnet.vn/vn/tai-chinh/trang{}/".format(i+1)
         print(url)
         driver.get(url)
         wait = WebDriverWait(driver, 3)

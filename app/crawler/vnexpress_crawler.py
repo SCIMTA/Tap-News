@@ -10,7 +10,7 @@ driver = get_driver()
 
 
 def vnexpress_crawler(nums_of_page):
-    url = "https://vnexpress.net/kinh-doanh/bat-dong-san"
+    url = "https://vnexpress.net/kinh-doanh/chung-khoan"
     driver.get(url)
     # wait = WebDriverWait(driver, 3)
     articles = []
@@ -29,7 +29,7 @@ def vnexpress_crawler(nums_of_page):
 
 
 def vnexpress_request(limit, page):
-    url = "https://gw.vnexpress.net/ar/get_rule_2?category_id=1003181&limit={}&page={}&data_select=title,lead,privacy,thumbnail_url,share_url,article_type,article_category,publish_time&thumb_size=120x72&thumb_quality=100&thumb_dpr=1,2&thumb_fit=crop".format(
+    url = "https://gw.vnexpress.net/ar/get_rule_2?category_id=1003180&limit={}&page={}&data_select=title,lead,privacy,thumbnail_url,share_url,article_type,article_category,publish_time&thumb_size=120x72&thumb_quality=100&thumb_dpr=1,2&thumb_fit=crop".format(
         limit, page)
 
     payload = {}
@@ -58,7 +58,7 @@ def vnexpress_crawler_api(articles_queue:QueueClient):
     for i in range(page):
         response = vnexpress_request(limit, page)
         data = json.loads(response.text)
-        raw_articles = data['data']['1003181']['data']
+        raw_articles = data['data']['1003180']['data']
 
         for article in raw_articles:
             # new_article_format = {'author': "VNExpress", 'title': article['title'],

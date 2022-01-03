@@ -11,7 +11,7 @@ driver = get_driver()
 
 def hanoimoi_crawler(articles_queue:QueueClient):
     num_of_page=2
-    url = "http://www.hanoimoi.com.vn/Danh-muc-tin/181/Bat-dong-san"
+    url = "http://www.hanoimoi.com.vn/Danh-muc-tin/188/Tai-chinh"
     driver.get(url)
     wait = WebDriverWait(driver, 3)
 

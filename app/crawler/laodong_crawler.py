@@ -12,7 +12,7 @@ def laodong_crawler(articles_queue:QueueClient):
     num_of_page=2
 
     for i in range(num_of_page):
-        url = "https://laodong.vn/bat-dong-san?page={}".format(i+1)
+        url = "https://laodong.vn/tien-te-dau-tu?page={}".format(i+1)
         print(url)
         driver.get(url)
         wait = WebDriverWait(driver, 3)

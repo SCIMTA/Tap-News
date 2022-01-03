@@ -9,7 +9,7 @@ class Base extends React.Component {
         <nav className="nav-bar indigo lighten-1">
           <div className="nav-wrapper">
             <a href="/" className="brand-logo">
-              &nbsp;&nbsp;Tin tức Bất động sản
+              &nbsp;&nbsp;TIN TỨC CHỨNG KHOÁN
             </a>
             <ul className="right" id="nav-mobile">
               {Auth.isUserAuthenticated() ? (

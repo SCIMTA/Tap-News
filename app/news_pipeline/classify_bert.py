@@ -81,8 +81,8 @@ def load_model():
     if (os.path.isfile("./models/model.hdf5")):
         try:
             # Assign model
-            tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
-            transformer_layer = transformers.TFAutoModel.from_pretrained('vinai/phobert-base')
+            tokenizer = AutoTokenizer.from_pretrained("Geotrend/bert-base-vi-cased")
+            transformer_layer = transformers.TFAutoModel.from_pretrained('Geotrend/bert-base-vi-cased')
             model = build_model(transformer_layer, max_len=512)
             model.summary()
             model.load_weights(
@@ -95,8 +95,8 @@ def load_model():
             print("Something happend, redownloading model...")
             # download_model()
             # Assign model
-            tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
-            transformer_layer = transformers.TFAutoModel.from_pretrained('vinai/phobert-base')
+            tokenizer = AutoTokenizer.from_pretrained("Geotrend/bert-base-vi-cased")
+            transformer_layer = transformers.TFAutoModel.from_pretrained('Geotrend/bert-base-vi-cased')
             model = build_model(transformer_layer, max_len=512)
             model.summary()
             model.load_weights(
@@ -111,7 +111,7 @@ def load_model():
     else:
         download_model()
         # Assign model
-        transformer_layer = transformers.TFAutoModel.from_pretrained('vinai/phobert-base')
+        transformer_layer = transformers.TFAutoModel.from_pretrained('Geotrend/bert-base-vi-cased')
         model = build_model(transformer_layer, max_len=512)
         model.summary()
         model.load_weights(
@@ -143,7 +143,7 @@ def regular_encode(texts, tokenizer, maxlen=512):
     return np.array(enc_di['input_ids'])
 
 
-def batdongsan_filter_bert(content, classify_model_bert, encoded_classes, tokenizer):
+def chungkhoan_filter_bert(content, classify_model_bert, encoded_classes, tokenizer):
     # t_start = time()
     BATCH_SIZE = 64
     # Encode input

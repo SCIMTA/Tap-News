@@ -32,13 +32,13 @@ def handle_message(news):
     model, encoder, tokenizer = model_bert
     text = news['title'] + ' ' + news['content']
     t_start = time()
-    predict_label, score = cls_bert.batdongsan_filter_bert(text, model, encoder, tokenizer)
+    predict_label, score = cls_bert.chungkhoan_filter_bert(text, model, encoder, tokenizer)
     print("[ANNOUNCE] Predicted success after {} seconds".format(time() - t_start))
     print('[Classify]', news['title'], '| label:', predict_label, '| score: ', score)
-    if predict_label == "Bat_dong_san":
+    if predict_label == "Chung_khoan":
         fetcher_queue_client.sendMessage(news)
     else:
-        print("[Classify] not Bat_dong_san")
+        print("[Classify] not Chung_khoan")
 
 while True:
     msg = classify_queue_client.getMessage()

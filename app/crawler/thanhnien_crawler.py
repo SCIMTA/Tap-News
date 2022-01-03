@@ -11,7 +11,7 @@ driver = get_driver()
 def thanhnien_crawler(articles_queue:QueueClient):
     num_of_page=2
     for i in range(num_of_page):
-        url = "https://thanhnien.vn/tai-chinh-kinh-doanh/dia-oc/?trang={}".format(i+1)
+        url = "https://thanhnien.vn/tai-chinh-kinh-doanh/chung-khoan/?trang={}".format(i+1)
         print(url)
         driver.get(url)
         wait = WebDriverWait(driver, 3)
