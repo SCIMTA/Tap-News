@@ -35,6 +35,8 @@ def handle_message(news):
     predict_label, score = cls_bert.batdongsan_filter_bert(text, model, encoder, tokenizer)
     print("[ANNOUNCE] Predicted success after {} seconds".format(time() - t_start))
     print('[Classify]', news['title'], '| label:', predict_label, '| score: ', score)
+    news['score'] = str(score)
+    news['key_search'] = text
     if predict_label == "Bat_dong_san":
         fetcher_queue_client.sendMessage(news)
     else:
