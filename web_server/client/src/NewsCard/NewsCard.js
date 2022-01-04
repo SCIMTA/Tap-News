@@ -70,6 +70,11 @@ class NewsCard extends React.Component {
                         )}
                       </div>
                     )}
+                    {this.props.news.score != null && (
+                      <div className="chip light-red news-chip">
+                        {this.props.news.score}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
