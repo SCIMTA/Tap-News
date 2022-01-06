@@ -1,8 +1,9 @@
 # Tap-News Bất-động-sản Vietnamese
-A real-time news scraping and recommendation system
-
 
 ### Project: Hệ thống tự động cập nhật tin tức bất động sản
+
+*Auto-crawling system for estate information in Vietnamese* 
+
 - Dev by [SCIMTA](https://github.com/SCIMTA) team:  
     - [neckgamervn](https://github.com/neckgamervn)  
     - [quocanh199](https://github.com/quocanh199)  
@@ -10,8 +11,26 @@ A real-time news scraping and recommendation system
     
 - Thanks to [ztqsteve/Tap-News](https://github.com/ztqsteve/Tap-News)  
   
-# How to run this???  
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SCIMTA/Tap-News/news_crawler/images/localhost_3001_.png" />
+</p>
+
+### What's news
+- Crawler from more than 10 Vietnamese newspaper
+- We use TF-IDF/NaiveBayes and Bert for classifier
+- Reformat code for python 3, custom Queue on localhost
+
+# Installation  
+
+You need to install [Docker](https://www.docker.com/) first!  
+
+# How to run 
+```
+git clone https://github.com/SCIMTA/Tap-News  
+cd Tap-News
+docker-compose up
+```  
+We also provide model here if something wrong:
+- [Naive Bayes](https://drive.google.com/uc?id=1riWxNbsxdAKuGj8YNXSOb7dje_-8xAWC)
+- [BERT](https://drive.google.com/uc?id=1m8y79sTEIjMGIJ5R3fFKNf4yITKHheam)
   
-> 1. `https://github.com/SCIMTA/Tap-News`  
-> 2. `cd Tap-News`  
-> 3. `docker-compose up`  
