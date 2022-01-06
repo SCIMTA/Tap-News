@@ -1,6 +1,9 @@
 # Tap-News Bất-động-sản Vietnamese
 
 ### Project: Hệ thống tự động cập nhật tin tức bất động sản
+
+*Auto-crawling system for estate information in Vietnamese* 
+
 - Dev by [SCIMTA](https://github.com/SCIMTA) team:  
     - [neckgamervn](https://github.com/neckgamervn)  
     - [quocanh199](https://github.com/quocanh199)  
@@ -8,6 +11,10 @@
     
 - Thanks to [ztqsteve/Tap-News](https://github.com/ztqsteve/Tap-News)  
   
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SCIMTA/Tap-News/news_crawler/images/localhost_3001_.png" />
+</p>
+
 ### What's news
 - Crawler from more than 10 Vietnamese newspaper
 - We use TF-IDF/NaiveBayes and Bert for classifier
@@ -17,7 +24,7 @@
 
 You need to install [Docker](https://www.docker.com/) first!  
 
-# Instruction 
+# How to run 
 ```
 git clone https://github.com/SCIMTA/Tap-News  
 cd Tap-News
